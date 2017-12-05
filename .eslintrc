@@ -15,5 +15,12 @@
     "react/jsx-filename-extension": ["off"],
     "jsx-a11y/anchor-is-valid":["warn"]
   },
-  "parser": "babel-eslint"
+  "parser": "babel-eslint",
+  "settings": {
+    "import/resolver": {
+      "node": {
+        "moduleDirectory": ["node_modules", "src"]
+      }
+    }
+  }
 }

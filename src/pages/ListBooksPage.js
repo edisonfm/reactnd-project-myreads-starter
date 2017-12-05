@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
-import * as BooksAPI from '../api/BooksAPI';
-import Bookshelf from '../components/Bookshelf';
+import * as BooksAPI from 'api/BooksAPI';
+import Bookshelf from 'components/Bookshelf';
 
 class ListBooksPage extends Component {
   constructor(props) {
