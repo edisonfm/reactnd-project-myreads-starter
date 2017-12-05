@@ -1,5 +1,8 @@
 {
-  "extends": ["airbnb", "prettier"],
+  "extends": [
+    "airbnb",
+    "prettier"
+  ],
   "plugins": [
     "react",
     "jsx-a11y",
@@ -9,7 +12,8 @@
   "rules": {
     "prettier/prettier": "error",
     "linebreak-style": ["error", "windows"],
-    "react/jsx-filename-extension": ["off"]
+    "react/jsx-filename-extension": ["off"],
+    "jsx-a11y/anchor-is-valid":["warn"]
   },
   "parser": "babel-eslint"
 }
