@@ -1,7 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import SHELFS from 'constants/shelfs';
 
-const Book = ({ book }) => (
+const Book = ({ book, onUpdateBook }) => (
   <div className="book">
     <div className="book-top">
       <div
@@ -13,13 +14,15 @@ const Book = ({ book }) => (
         }}
       />
       <div className="book-shelf-changer">
-        <select>
+        <select onChange={e => onUpdateBook(book, e.target.value)}>
           <option value="none" disabled>
             Move to...
           </option>
-          <option value="currentlyReading">Currently Reading</option>
-          <option value="wantToRead">Want to Read</option>
-          <option value="read">Read</option>
+          {SHELFS.map(shelf => (
+            <option value={shelf.type} selected={shelf.type === book.shelf}>
+              {shelf.title}
+            </option>
+          ))}
           <option value="none">None</option>
         </select>
       </div>
@@ -40,6 +43,7 @@ Book.propTypes = {
     imageLinks: PropTypes.shape({ thumbnail: PropTypes.string.isRequired })
       .isRequired,
   }).isRequired,
+  onUpdateBook: PropTypes.func.isRequired,
 };
 
 export default Book;

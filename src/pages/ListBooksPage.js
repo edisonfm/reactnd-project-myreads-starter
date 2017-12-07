@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import Bookshelf from 'components/Bookshelf';
 import SHELFS from 'constants/shelfs';
 
-const ListBooksPage = ({ books }) => (
+const ListBooksPage = ({ books, onUpdateBook }) => (
   <div className="list-books">
     <div className="list-books-title">
       <h1>MyReads</h1>
@@ -18,6 +18,7 @@ const ListBooksPage = ({ books }) => (
               key={shelf.type}
               title={shelf.title}
               books={booksOnShelf}
+              onUpdateBook={onUpdateBook}
             />
           );
         })}
@@ -31,6 +32,7 @@ const ListBooksPage = ({ books }) => (
 
 ListBooksPage.propTypes = {
   books: PropTypes.arrayOf(PropTypes.object).isRequired,
+  onUpdateBook: PropTypes.func.isRequired,
 };
 
 export default ListBooksPage;
