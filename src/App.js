@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
 import { Route } from 'react-router-dom';
+import { debounce } from 'lodash';
 import SearchBookPage from 'pages/SearchBooksPage';
 import ListBooksPage from 'pages/ListBooksPage';
-import * as BooksAPI from './api/BooksAPI';
+import * as BooksAPI from 'api/BooksAPI';
 import './App.css';
 
 class BooksApp extends Component {
@@ -10,6 +11,7 @@ class BooksApp extends Component {
     super(props);
     this.state = {
       books: [],
+      searchBooks: [],
     };
   }
 
@@ -32,7 +34,21 @@ class BooksApp extends Component {
     });
   };
 
+  searchBook = searchTerm => {
+    if (searchTerm) {
+      BooksAPI.search(searchTerm).then(books => {
+        this.setState(() => ({
+          searchBooks: books,
+        }));
+      });
+    }
+  };
+
   render() {
+    const onSearchBook = debounce(searchTerm => {
+      this.searchBook(searchTerm);
+    }, 500);
+
     return (
       <div className="app">
         <Route
@@ -45,7 +61,16 @@ class BooksApp extends Component {
             />
           )}
         />
-        <Route path="/search" component={SearchBookPage} />
+        <Route
+          path="/search"
+          render={() => (
+            <SearchBookPage
+              books={this.state.searchBooks}
+              onUpdateBook={this.onUpdateBook}
+              onSearchBook={onSearchBook}
+            />
+          )}
+        />
       </div>
     );
   }

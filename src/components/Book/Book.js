@@ -14,12 +14,15 @@ const Book = ({ book, onUpdateBook }) => (
         }}
       />
       <div className="book-shelf-changer">
-        <select onChange={e => onUpdateBook(book, e.target.value)}>
+        <select
+          onChange={e => onUpdateBook(book, e.target.value)}
+          defaultValue={book.shelf}
+        >
           <option value="none" disabled>
             Move to...
           </option>
           {SHELFS.map(shelf => (
-            <option value={shelf.type} selected={shelf.type === book.shelf}>
+            <option key={shelf.type} value={shelf.type}>
               {shelf.title}
             </option>
           ))}
@@ -28,18 +31,20 @@ const Book = ({ book, onUpdateBook }) => (
       </div>
     </div>
     <div className="book-title">{book.title}</div>
-    {book.authors.map(author => (
-      <div key={author} className="book-authors">
-        {author}
-      </div>
-    ))}
+
+    {book.authors &&
+      book.authors.forEach(author => (
+        <div key={author} className="book-authors">
+          {author}
+        </div>
+      ))}
   </div>
 );
 
 Book.propTypes = {
   book: PropTypes.shape({
     title: PropTypes.string.isRequired,
-    authors: PropTypes.arrayOf(PropTypes.string.isRequired).isRequired,
+    authors: PropTypes.arrayOf(PropTypes.string),
     imageLinks: PropTypes.shape({ thumbnail: PropTypes.string.isRequired })
       .isRequired,
   }).isRequired,

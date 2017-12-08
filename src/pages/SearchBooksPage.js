@@ -1,32 +1,39 @@
-import React, { Component } from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
+import Book from 'components/Book';
 
-class SearchBooksPage extends Component {
-  render() {
-    return (
-      <div className="search-books">
-        <div className="search-books-bar">
-          <Link className="close-search" to="/">
-            Close
-          </Link>
-          <div className="search-books-input-wrapper">
-            {/*
-              NOTES: The search from BooksAPI is limited to a particular set of search terms.
-              You can find these search terms here:
-              https://github.com/udacity/reactnd-project-myreads-starter/blob/master/SEARCH_TERMS.md
-
-              However, remember that the BooksAPI.search method DOES search by title or author. So, don't worry if
-              you don't find a specific author or title. Every search is limited by search terms.
-            */}
-            <input type="text" placeholder="Search by title or author" />
-          </div>
-        </div>
-        <div className="search-books-results">
-          <ol className="books-grid" />
-        </div>
+const SearchBooksPage = ({ books, onUpdateBook, onSearchBook }) => (
+  <div className="search-books">
+    <div className="search-books-bar">
+      <Link className="close-search" to="/">
+        Close
+      </Link>
+      <div className="search-books-input-wrapper">
+        <input
+          type="text"
+          placeholder="Search by title or author"
+          onChange={e => onSearchBook(e.target.value)}
+        />
       </div>
-    );
-  }
-}
+    </div>
+    <div className="search-books-results">
+      <ol className="books-grid">
+        {books &&
+          books.map(book => (
+            <li key={book.id}>
+              <Book book={book} onUpdateBook={onUpdateBook} />
+            </li>
+          ))}
+      </ol>
+    </div>
+  </div>
+);
+
+SearchBooksPage.propTypes = {
+  books: PropTypes.arrayOf(PropTypes.object).isRequired,
+  onUpdateBook: PropTypes.func.isRequired,
+  onSearchBook: PropTypes.func.isRequired,
+};
 
 export default SearchBooksPage;
