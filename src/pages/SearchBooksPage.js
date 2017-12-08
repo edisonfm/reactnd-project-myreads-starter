@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { Debounce } from 'react-throttle';
 import { Link } from 'react-router-dom';
 import Book from 'components/Book';
 
@@ -10,11 +11,13 @@ const SearchBooksPage = ({ books, onUpdateBook, onSearchBook }) => (
         Close
       </Link>
       <div className="search-books-input-wrapper">
-        <input
-          type="text"
-          placeholder="Search by title or author"
-          onChange={e => onSearchBook(e.target.value)}
-        />
+        <Debounce time="400" handler="onChange">
+          <input
+            type="text"
+            placeholder="Search by title or author"
+            onChange={e => onSearchBook(e.target.value)}
+          />
+        </Debounce>
       </div>
     </div>
     <div className="search-books-results">
