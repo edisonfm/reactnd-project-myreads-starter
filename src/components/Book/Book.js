@@ -34,12 +34,10 @@ const Book = ({ book, loadingBook, onUpdateBook }) => (
     </div>
     <div className="book-title">{book.title}</div>
 
-    {book.authors &&
-      book.authors.forEach(author => (
-        <div key={author} className="book-authors">
-          {author}
-        </div>
-      ))}
+    <div className="book-authors">
+      {book.authors &&
+        book.authors.map(author => <div key={author}>{author}</div>)}
+    </div>
   </div>
 );
 
