@@ -2,7 +2,11 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 const Draggable = ({ children, element, onDragStart }) => (
-  <div draggable onDragStart={() => onDragStart(element)}>
+  <div
+    draggable
+    onDragStart={() => onDragStart(element)}
+    style={{ cursor: '-webkit-grab' }}
+  >
     {children}
   </div>
 );
