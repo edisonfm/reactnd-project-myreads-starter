@@ -24,6 +24,7 @@ body, .app {
 .list-books-content {
   padding: 0 0 80px;
   flex: 1;
+  margin-top: 20px;
 }
 
 .bookshelf {

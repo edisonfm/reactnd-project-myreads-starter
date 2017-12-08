@@ -6,9 +6,9 @@ import Book from 'components/Book';
 
 const SearchBooksPage = ({
   books,
+  loadingBook,
   onUpdateBook,
   onSearchBook,
-  loadingBook,
 }) => (
   <div className="search-books">
     <div className="search-books-bar">
@@ -42,8 +42,13 @@ const SearchBooksPage = ({
   </div>
 );
 
+SearchBooksPage.defaultProps = {
+  loadingBook: null,
+};
+
 SearchBooksPage.propTypes = {
   books: PropTypes.arrayOf(PropTypes.object).isRequired,
+  loadingBook: PropTypes.string,
   onUpdateBook: PropTypes.func.isRequired,
   onSearchBook: PropTypes.func.isRequired,
 };

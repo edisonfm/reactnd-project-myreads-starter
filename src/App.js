@@ -11,7 +11,8 @@ class BooksApp extends Component {
     this.state = {
       books: [],
       searchBooks: [],
-      loadingBook: false,
+      loadingBook: null,
+      draggableBook: null,
     };
   }
 
@@ -35,7 +36,7 @@ class BooksApp extends Component {
 
         searchBooks: prevState.searchBooks.filter(b => b.id !== bookUpdated.id),
 
-        loadingBook: false,
+        loadingBook: null,
       }));
     });
   };
@@ -50,6 +51,12 @@ class BooksApp extends Component {
     }
   };
 
+  onDragStart = book => {
+    this.setState(() => ({
+      draggableBook: book,
+    }));
+  };
+
   render() {
     return (
       <div className="app">
@@ -59,8 +66,10 @@ class BooksApp extends Component {
           render={() => (
             <ListBooksPage
               books={this.state.books}
-              onUpdateBook={this.onUpdateBook}
               loadingBook={this.state.loadingBook}
+              draggableBook={this.state.draggableBook}
+              onUpdateBook={this.onUpdateBook}
+              onDragStart={this.onDragStart}
             />
           )}
         />
@@ -69,9 +78,9 @@ class BooksApp extends Component {
           render={() => (
             <SearchBookPage
               books={this.state.searchBooks}
+              loadingBook={this.state.loadingBook}
               onUpdateBook={this.onUpdateBook}
               onSearchBook={this.onSearchBook}
-              loadingBook={this.state.loadingBook}
             />
           )}
         />
