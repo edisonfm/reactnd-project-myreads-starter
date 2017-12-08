@@ -11,6 +11,7 @@ class BooksApp extends Component {
     this.state = {
       books: [],
       searchBooks: [],
+      loadingBook: false,
     };
   }
 
@@ -24,11 +25,17 @@ class BooksApp extends Component {
     const bookUpdated = { ...book };
     bookUpdated.shelf = shelf;
 
+    this.setState({ loadingBook: book.id });
+
     BooksAPI.update(bookUpdated, shelf).then(() => {
       this.setState(prevState => ({
         books: prevState.books
           .filter(b => b.id !== bookUpdated.id)
           .concat([bookUpdated]),
+
+        searchBooks: prevState.searchBooks.filter(b => b.id !== bookUpdated.id),
+
+        loadingBook: false,
       }));
     });
   };
@@ -36,7 +43,6 @@ class BooksApp extends Component {
   onSearchBook = searchTerm => {
     if (searchTerm) {
       BooksAPI.search(searchTerm).then(books => {
-        console.log(books);
         this.setState(() => ({
           searchBooks: books,
         }));
@@ -54,6 +60,7 @@ class BooksApp extends Component {
             <ListBooksPage
               books={this.state.books}
               onUpdateBook={this.onUpdateBook}
+              loadingBook={this.state.loadingBook}
             />
           )}
         />
@@ -64,6 +71,7 @@ class BooksApp extends Component {
               books={this.state.searchBooks}
               onUpdateBook={this.onUpdateBook}
               onSearchBook={this.onSearchBook}
+              loadingBook={this.state.loadingBook}
             />
           )}
         />

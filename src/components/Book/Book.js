@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import SHELFS from 'constants/shelfs';
 
-const Book = ({ book, onUpdateBook }) => (
+const Book = ({ book, onUpdateBook, loadingBook }) => (
   <div className="book">
     <div className="book-top">
       <div
@@ -12,7 +12,9 @@ const Book = ({ book, onUpdateBook }) => (
           height: 193,
           backgroundImage: `url(${book.imageLinks.thumbnail})`,
         }}
-      />
+      >
+        {loadingBook === book.id && <div>Carregando</div>}
+      </div>
       <div className="book-shelf-changer">
         <select
           onChange={e => onUpdateBook(book, e.target.value)}

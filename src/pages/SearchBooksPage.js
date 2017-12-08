@@ -4,7 +4,12 @@ import { Debounce } from 'react-throttle';
 import { Link } from 'react-router-dom';
 import Book from 'components/Book';
 
-const SearchBooksPage = ({ books, onUpdateBook, onSearchBook }) => (
+const SearchBooksPage = ({
+  books,
+  onUpdateBook,
+  onSearchBook,
+  loadingBook,
+}) => (
   <div className="search-books">
     <div className="search-books-bar">
       <Link className="close-search" to="/">
@@ -25,7 +30,11 @@ const SearchBooksPage = ({ books, onUpdateBook, onSearchBook }) => (
         {books &&
           books.map(book => (
             <li key={book.id}>
-              <Book book={book} onUpdateBook={onUpdateBook} />
+              <Book
+                book={book}
+                onUpdateBook={onUpdateBook}
+                loadingBook={loadingBook}
+              />
             </li>
           ))}
       </ol>
