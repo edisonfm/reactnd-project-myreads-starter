@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { Draggable } from 'components/DragAndDrop';
 import Book from '../Book';
 
 const Bookshelf = ({
@@ -15,12 +16,13 @@ const Bookshelf = ({
       <ol className="books-grid">
         {books.map(book => (
           <li key={book.id}>
-            <Book
-              book={book}
-              onUpdateBook={onUpdateBook}
-              loadingBook={loadingBook}
-              onDragStart={onDragStart}
-            />
+            <Draggable element={book} onDragStart={onDragStart}>
+              <Book
+                book={book}
+                onUpdateBook={onUpdateBook}
+                loadingBook={loadingBook}
+              />
+            </Draggable>
           </li>
         ))}
       </ol>
