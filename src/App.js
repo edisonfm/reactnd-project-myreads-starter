@@ -84,6 +84,18 @@ class BooksApp extends Component {
             />
           )}
         />
+
+        <Route
+          path="/detail"
+          render={() => (
+            <SearchBookPage
+              books={this.state.searchBooks}
+              loadingBook={this.state.loadingBook}
+              onUpdateBook={this.onUpdateBook}
+              onSearchBook={this.onSearchBook}
+            />
+          )}
+        />
       </div>
     );
   }
