@@ -27,7 +27,18 @@ const SearchBooksPage = ({
     </div>
     <div className="search-books-results">
       <ol className="books-grid">
-        {books &&
+        {books.error ? (
+          <p>
+            Books not found, try another{' '}
+            <a
+              href="https://github.com/udacity/reactnd-project-myreads-starter/blob/master/SEARCH_TERMS.md"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              term
+            </a>
+          </p>
+        ) : (
           books.map(book => (
             <li key={book.id}>
               <Book
@@ -36,7 +47,8 @@ const SearchBooksPage = ({
                 loadingBook={loadingBook}
               />
             </li>
-          ))}
+          ))
+        )}
       </ol>
     </div>
   </div>
@@ -47,7 +59,7 @@ SearchBooksPage.defaultProps = {
 };
 
 SearchBooksPage.propTypes = {
-  books: PropTypes.arrayOf(PropTypes.object).isRequired,
+  books: PropTypes.oneOfType([PropTypes.array, PropTypes.object]).isRequired,
   loadingBook: PropTypes.string,
   onUpdateBook: PropTypes.func.isRequired,
   onSearchBook: PropTypes.func.isRequired,
