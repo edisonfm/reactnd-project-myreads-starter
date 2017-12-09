@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
-import { Route } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
 import SearchBookPage from 'pages/SearchBooksPage';
 import ListBooksPage from 'pages/ListBooksPage';
+import DetailBookPage from 'pages/DetailBookPage';
 import * as BooksAPI from 'api/BooksAPI';
 import './App.css';
 
@@ -59,44 +60,50 @@ class BooksApp extends Component {
 
   render() {
     return (
-      <div className="app">
-        <Route
-          path="/"
-          exact
-          render={() => (
-            <ListBooksPage
-              books={this.state.books}
-              loadingBook={this.state.loadingBook}
-              draggableBook={this.state.draggableBook}
-              onUpdateBook={this.onUpdateBook}
-              onDragStart={this.onDragStart}
-            />
-          )}
-        />
-        <Route
-          path="/search"
-          render={() => (
-            <SearchBookPage
-              books={this.state.searchBooks}
-              loadingBook={this.state.loadingBook}
-              onUpdateBook={this.onUpdateBook}
-              onSearchBook={this.onSearchBook}
-            />
-          )}
-        />
-
-        <Route
-          path="/detail"
-          render={() => (
-            <SearchBookPage
-              books={this.state.searchBooks}
-              loadingBook={this.state.loadingBook}
-              onUpdateBook={this.onUpdateBook}
-              onSearchBook={this.onSearchBook}
-            />
-          )}
-        />
-      </div>
+      <Router>
+        <div className="app">
+          <div className="list-books-title">
+            <Link className="close-search" to="/">
+              Close
+            </Link>
+            <h1>MyReads</h1>
+          </div>
+          <Route
+            path="/"
+            exact
+            render={() => (
+              <ListBooksPage
+                books={this.state.books}
+                loadingBook={this.state.loadingBook}
+                draggableBook={this.state.draggableBook}
+                onUpdateBook={this.onUpdateBook}
+                onDragStart={this.onDragStart}
+              />
+            )}
+          />
+          <Route
+            path="/search"
+            render={() => (
+              <SearchBookPage
+                books={this.state.searchBooks}
+                loadingBook={this.state.loadingBook}
+                onUpdateBook={this.onUpdateBook}
+                onSearchBook={this.onSearchBook}
+              />
+            )}
+          />
+          <Route
+            path="/detail/:bookId"
+            render={props => (
+              <DetailBookPage
+                {...props}
+                loadingBook={this.state.loadingBook}
+                onUpdateBook={this.onUpdateBook}
+              />
+            )}
+          />
+        </div>
+      </Router>
     );
   }
 }

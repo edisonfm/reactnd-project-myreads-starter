@@ -1,20 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import SHELFS from 'constants/shelfs';
+import { BookCover } from 'components/Book';
 
 const Book = ({ book, loadingBook, onUpdateBook }) => (
   <div className="book">
+    {loadingBook === book.id && <div>Carregando</div>}
     <div className="book-top">
-      <div
-        className="book-cover"
-        style={{
-          width: 128,
-          height: 193,
-          backgroundImage: `url(${book.imageLinks.thumbnail})`,
-        }}
-      >
-        {loadingBook === book.id && <div>Carregando</div>}
-      </div>
+      <BookCover bookId={book.id} thumbnail={book.imageLinks.thumbnail} />
       <div className="book-shelf-changer">
         <select
           onChange={e => onUpdateBook(book, e.target.value)}
