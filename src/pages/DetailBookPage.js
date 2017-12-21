@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import * as BooksAPI from 'api/BooksAPI';
 import { BookCover, BookInfo } from 'components/Book';
+import Header from 'components/Header';
 
 class DetailBookPage extends Component {
   state = {
@@ -22,12 +23,13 @@ class DetailBookPage extends Component {
       book && (
         <div
           style={{
-            maxWidth: '800px',
+            maxWidth: '1200px',
             padding: '20px',
             margin: 'auto',
           }}
         >
           <div>
+            <Header arrow />
             <div>
               <h1 style={{ marginBottom: 0 }}>{book.title}</h1>
               <div style={{ marginBottom: '20px' }}>{book.subtitle}</div>

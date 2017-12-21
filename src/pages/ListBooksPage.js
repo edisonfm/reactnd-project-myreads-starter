@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import Bookshelf from 'components/Bookshelf';
 import SHELFS from 'constants/shelfs';
 import { DropZone } from 'components/DragAndDrop';
+import Header from 'components/Header';
 
 const ListBooksPage = ({
   books,
@@ -12,32 +13,39 @@ const ListBooksPage = ({
   onUpdateBook,
   onDragStart,
 }) => (
-  <div className="list-books">
-    <div className="list-books-content">
-      <div>
-        {SHELFS.map(shelf => {
-          const booksOnShelf = books.filter(book => book.shelf === shelf.type);
-          return (
-            <DropZone
-              key={shelf.type}
-              draggableBook={draggableBook}
-              shelf={shelf.type}
-              onUpdateBook={onUpdateBook}
-            >
-              <Bookshelf
-                title={shelf.title}
-                books={booksOnShelf}
-                loadingBook={loadingBook}
+  <div>
+    <Header />
+    <div className="list-books">
+      <div className="list-books-content">
+        <div>
+          {SHELFS.map(shelf => {
+            const booksOnShelf = books.filter(
+              book => book.shelf === shelf.type
+            );
+            return (
+              <DropZone
+                key={shelf.type}
+                draggableBook={draggableBook}
+                shelf={shelf.type}
                 onUpdateBook={onUpdateBook}
-                onDragStart={onDragStart}
-              />
-            </DropZone>
-          );
-        })}
+              >
+                <div>
+                  <Bookshelf
+                    title={shelf.title}
+                    books={booksOnShelf}
+                    loadingBook={loadingBook}
+                    onUpdateBook={onUpdateBook}
+                    onDragStart={onDragStart}
+                  />
+                </div>
+              </DropZone>
+            );
+          })}
+        </div>
       </div>
-    </div>
-    <div className="open-search">
-      <Link to="/search">Add a book</Link>
+      <div className="open-search">
+        <Link to="/search">Add a book</Link>
+      </div>
     </div>
   </div>
 );

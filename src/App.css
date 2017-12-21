@@ -22,7 +22,7 @@ body, .app {
 }
 
 .list-books-content {
-  padding: 0 0 80px;
+  padding: 30px 0 80px 0;
   flex: 1;
   margin-top: 20px;
 }
@@ -66,13 +66,10 @@ body, .app {
 /* search page */
 
 .search-books-bar {
-  position: fixed;
   width: 100%;
-  top: 0;
-  left: 0;
-  z-index: 5;
   display: flex;
   box-shadow: 0 10px 20px rgba(0,0,0,0.19), 0 0 6px rgba(0,0,0,0.23);
+  margin-top: 0;
 }
 .search-books-input-wrapper {
   flex: 1;
@@ -88,16 +85,15 @@ body, .app {
 
 .close-search {
   display: block;
-  top: 20px;
-  left: 15px;
-  width: 50px;
-  height: 53px;
-  background: white;
+  width: 40px;
+  height: 40px;
+  background: rgba(255,255,255,1);
   background-image: url('./icons/arrow-back.svg');
   background-position: center;
   background-repeat: no-repeat;
   background-size: 28px;
   font-size: 0;
+  border-radius: 50%;
 }
 
 .search-books-results {
@@ -121,7 +117,9 @@ body, .app {
 }
 
 .book {
-  width: 140px;
+  width: 170px;
+  text-align: center;
+  min-height: 200px;
 }
 .book-title,
 .book-authors {
@@ -137,8 +135,11 @@ body, .app {
 .book-top {
   position: relative;
   height: 200px;
-  display: flex;
-  align-items: flex-end;
+  text-align: center;
+}
+
+.book-content {
+  min-height: 160px;
 }
 
 .book-shelf-changer {
@@ -165,8 +166,12 @@ body, .app {
 /* book cover */
 
 .book-cover {
-  box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
   background: #eee;
+  width: 170px;
+  height: 200px;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center top;
 }
 .book-cover-title {
   padding: 20px 10px 0;

@@ -1,4 +1,44 @@
 {
+  "reactToolbox": {
+    "include": [
+      "APP_BAR",
+      "AUTOCOMPLETE",
+      "AVATAR",
+      "BUTTON",
+      "CARD",
+      "CHIP",
+      "CHECKBOX",
+      "DATE_PICKER",
+      "DIALOG",
+      "DRAWER",
+      "DROPDOWN",
+      "INPUT",
+      "LAYOUT",
+      "LINK",
+      "LIST",
+      "MENU",
+      "NAVIGATION",
+      "OVERLAY",
+      "PROGRESS_BAR",
+      "RADIO",
+      "RIPPLE",
+      "SLIDER",
+      "SNACKBAR",
+      "SWITCH",
+      "TABLE",
+      "TABS",
+      "TOOLTIP",
+      "TIME_PICKER"
+    ],
+    "customProperties": {
+      "animation-duration": "0.3s",
+      "color-accent": "var(--palette-pink-a200)",
+      "color-accent-dark": "var(--palette-pink-700)",
+      "color-primary-contrast": "var(--color-dark-contrast)",
+      "color-accent-contrast": "var(--color-dark-contrast)"
+    },
+    "output": "src/assets/react-toolbox"
+  },
   "dependencies": {
     "lodash": "^4.17.4",
     "prop-types": "^15.5.8",
@@ -6,7 +46,8 @@
     "react-dom": "^15.5.4",
     "react-overdrive": "0.0.9",
     "react-router-dom": "^4.2.2",
-    "react-throttle": "^0.3.0"
+    "react-throttle": "^0.3.0",
+    "react-toolbox": "2.0.0-beta.6"
   },
   "devDependencies": {
     "babel-eslint": "^8.0.3",
@@ -21,7 +62,8 @@
     "husky": "^0.14.3",
     "lint-staged": "^6.0.0",
     "prettier": "^1.8.2",
-    "react-scripts": "1.0.17"
+    "react-scripts": "1.0.17",
+    "react-toolbox-themr": "^1.0.2"
   },
   "scripts": {
     "start": "cross-env react-scripts start",
@@ -29,6 +71,7 @@
     "lint": "eslint .",
     "prettier": "prettier --write {src,!api}/**/*.js",
     "precommit": "lint-staged",
+    "toolbox": "react-toolbox-themr",
     "test": "cross-env react-scripts test --env=jsdom",
     "eject": "cross-env react-scripts eject"
   },

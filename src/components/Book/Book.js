@@ -1,36 +1,33 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import SHELFS from 'constants/shelfs';
-import { BookCover } from 'components/Book';
+import { BookCover, BookShelfCharger } from 'components/Book';
+import { Card, CardMedia, CardText } from 'react-toolbox/lib/card';
 
 const Book = ({ book, loadingBook, onUpdateBook }) => (
   <div className="book">
-    {loadingBook === book.id && <div>Carregando</div>}
-    <div className="book-top">
-      <BookCover bookId={book.id} thumbnail={book.imageLinks.thumbnail} />
-      <div className="book-shelf-changer">
-        <select
-          onChange={e => onUpdateBook(book, e.target.value)}
-          defaultValue={book.shelf}
-        >
-          <option value="none" disabled>
-            Move to...
-          </option>
-          {SHELFS.map(shelf => (
-            <option key={shelf.type} value={shelf.type}>
-              {shelf.title}
-            </option>
-          ))}
-          <option value="none">None</option>
-        </select>
+    <Card>
+      {loadingBook === book.id && <div>Carregando</div>}
+      <div className="book-top">
+        <CardMedia>
+          <BookCover bookId={book.id} thumbnail={book.imageLinks.thumbnail} />
+        </CardMedia>
+        <BookShelfCharger
+          book={book}
+          shelf={book.shelf}
+          onUpdateBook={onUpdateBook}
+        />
       </div>
-    </div>
-    <div className="book-title">{book.title}</div>
-
-    <div className="book-authors">
-      {book.authors &&
-        book.authors.map(author => <div key={author}>{author}</div>)}
-    </div>
+      <div className="book-content">
+        <h4 style={{ marginBottom: 0, width: '100%' }}>{book.title}</h4>
+        <CardText>
+          <small style={{ fontSize: '13px' }}>Authors:</small>
+          <span style={{ color: '#757575' }}>
+            {book.authors &&
+              book.authors.map(author => <div key={author}>{author}</div>)}
+          </span>
+        </CardText>
+      </div>
+    </Card>
   </div>
 );
 
