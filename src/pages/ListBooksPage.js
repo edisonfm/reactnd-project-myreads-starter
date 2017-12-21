@@ -22,6 +22,8 @@ const ListBooksPage = ({
             const booksOnShelf = books.filter(
               book => book.shelf === shelf.type
             );
+            console.log(booksOnShelf);
+
             return (
               <DropZone
                 key={shelf.type}
