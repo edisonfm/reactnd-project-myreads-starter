@@ -6,7 +6,7 @@ import Book from '../Book';
 const Bookshelf = ({
   title,
   books,
-  loadingBook,
+  updatingBook,
   onUpdateBook,
   onDragStart,
 }) => (
@@ -22,7 +22,7 @@ const Bookshelf = ({
               <Book
                 book={book}
                 onUpdateBook={onUpdateBook}
-                loadingBook={loadingBook}
+                updatingBook={updatingBook}
               />
             </Draggable>
           </li>
@@ -33,13 +33,13 @@ const Bookshelf = ({
 );
 
 Bookshelf.defaultProps = {
-  loadingBook: null,
+  updatingBook: null,
 };
 
 Bookshelf.propTypes = {
   title: PropTypes.string.isRequired,
   books: PropTypes.arrayOf(PropTypes.object).isRequired,
-  loadingBook: PropTypes.string,
+  updatingBook: PropTypes.string,
   onUpdateBook: PropTypes.func.isRequired,
   onDragStart: PropTypes.func.isRequired,
 };

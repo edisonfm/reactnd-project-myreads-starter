@@ -2,11 +2,26 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { BookCover, BookShelfCharger } from 'components/Book';
 import { Card, CardMedia, CardText } from 'react-toolbox/lib/card';
+import { ProgressBar } from 'react-toolbox/lib/progress_bar';
+import SHELFS from 'constants/shelfs';
 
-const Book = ({ book, loadingBook, onUpdateBook }) => (
+const Book = ({ book, updatingBook, onUpdateBook, showBadge }) => (
   <div className="book">
     <Card>
-      {loadingBook === book.id && <div>Carregando</div>}
+      {updatingBook === book.id && (
+        <span className="book-loading">
+          <ProgressBar type="circular" multicolor />
+        </span>
+      )}
+      {showBadge &&
+        SHELFS.map(
+          shelf =>
+            shelf.type === book.shelf && (
+              <span key={shelf.type} className={`book-badge ${shelf.type}`}>
+                {shelf.title}
+              </span>
+            )
+        )}
       <div className="book-top">
         <CardMedia>
           <BookCover bookId={book.id} thumbnail={book.imageLinks.thumbnail} />
@@ -32,7 +47,8 @@ const Book = ({ book, loadingBook, onUpdateBook }) => (
 );
 
 Book.defaultProps = {
-  loadingBook: null,
+  updatingBook: null,
+  showBadge: false,
 };
 
 Book.propTypes = {
@@ -42,8 +58,9 @@ Book.propTypes = {
     imageLinks: PropTypes.shape({ thumbnail: PropTypes.string.isRequired })
       .isRequired,
   }).isRequired,
-  loadingBook: PropTypes.string,
+  updatingBook: PropTypes.string,
   onUpdateBook: PropTypes.func.isRequired,
+  showBadge: PropTypes.bool,
 };
 
 export default Book;

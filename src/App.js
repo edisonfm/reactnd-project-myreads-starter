@@ -4,6 +4,8 @@ import SearchBookPage from 'pages/SearchBooksPage';
 import ListBooksPage from 'pages/ListBooksPage';
 import DetailBookPage from 'pages/DetailBookPage';
 import * as BooksAPI from 'api/BooksAPI';
+import * as R from 'ramda';
+import convertObjtToArray from 'utils';
 import './App.css';
 
 class BooksApp extends Component {
@@ -12,14 +14,15 @@ class BooksApp extends Component {
     this.state = {
       books: [],
       searchBooks: [],
-      loadingBook: null,
+      updatingBook: null,
+      loadingBooks: true,
       draggableBook: null,
     };
   }
 
   componentDidMount() {
     BooksAPI.getAll().then(books => {
-      this.setState({ books });
+      this.setState({ books, loadingBooks: null });
     });
   }
 
@@ -27,7 +30,7 @@ class BooksApp extends Component {
     const bookUpdated = { ...book };
     bookUpdated.shelf = shelf;
 
-    this.setState({ loadingBook: book.id });
+    this.setState({ updatingBook: book.id });
 
     BooksAPI.update(bookUpdated, shelf).then(() => {
       this.setState(prevState => ({
@@ -37,16 +40,27 @@ class BooksApp extends Component {
 
         searchBooks: prevState.searchBooks.filter(b => b.id !== bookUpdated.id),
 
-        loadingBook: null,
+        updatingBook: null,
       }));
     });
   };
 
   onSearchBook = searchTerm => {
     if (searchTerm) {
-      BooksAPI.search(searchTerm).then(books => {
+      this.setState({ loadingBooks: true });
+
+      BooksAPI.search(searchTerm).then(searchBooks => {
+        const booksOnShelf = this.state.books.filter(searchBook =>
+          searchBooks.find(
+            stateBooks =>
+              stateBooks.title === searchBook.title &&
+              stateBooks.publishedDate === searchBook.publishedDate
+          )
+        );
+        const mergedBooks = R.merge(searchBooks, booksOnShelf);
         this.setState(() => ({
-          searchBooks: books,
+          searchBooks: convertObjtToArray(mergedBooks),
+          loadingBooks: null,
         }));
       });
     }
@@ -67,7 +81,8 @@ class BooksApp extends Component {
           render={() => (
             <ListBooksPage
               books={this.state.books}
-              loadingBook={this.state.loadingBook}
+              updatingBook={this.state.updatingBook}
+              loadingBooks={this.state.loadingBooks}
               draggableBook={this.state.draggableBook}
               onUpdateBook={this.onUpdateBook}
               onDragStart={this.onDragStart}
@@ -79,7 +94,8 @@ class BooksApp extends Component {
           render={() => (
             <SearchBookPage
               books={this.state.searchBooks}
-              loadingBook={this.state.loadingBook}
+              updatingBook={this.state.updatingBook}
+              loadingBooks={this.state.loadingBooks}
               onUpdateBook={this.onUpdateBook}
               onSearchBook={this.onSearchBook}
             />
@@ -90,7 +106,7 @@ class BooksApp extends Component {
           render={props => (
             <DetailBookPage
               {...props}
-              loadingBook={this.state.loadingBook}
+              updatingBook={this.state.updatingBook}
               onUpdateBook={this.onUpdateBook}
             />
           )}
