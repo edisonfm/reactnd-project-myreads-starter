@@ -65,7 +65,7 @@ class DetailBookPage extends Component {
 }
 
 DetailBookPage.propTypes = {
-  match: PropTypes.objectOf(PropTypes.object).isRequired,
+  match: PropTypes.objectOf(PropTypes.any).isRequired,
 };
 
 export default DetailBookPage;

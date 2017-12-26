@@ -17,8 +17,7 @@ const BookInfo = ({ title, description }) => (
 
 BookInfo.propTypes = {
   title: PropTypes.string.isRequired,
-  description: PropTypes.oneOfType([PropTypes.string, PropTypes.array])
-    .isRequired,
+  description: PropTypes.any.isRequired,
 };
 
 export default BookInfo;
