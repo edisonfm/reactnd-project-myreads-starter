@@ -17,6 +17,7 @@ class BooksApp extends Component {
       updatingBook: null,
       loadingBooks: true,
       draggableBook: null,
+      invalidSearchTerm: null,
     };
   }
 
@@ -49,20 +50,32 @@ class BooksApp extends Component {
     if (searchTerm) {
       this.setState({ loadingBooks: true });
 
-      BooksAPI.search(searchTerm).then(searchBooks => {
-        const booksOnShelf = this.state.books.filter(searchBook =>
-          searchBooks.find(
-            stateBooks =>
-              stateBooks.title === searchBook.title &&
-              stateBooks.publishedDate === searchBook.publishedDate
-          )
-        );
-        const mergedBooks = R.merge(searchBooks, booksOnShelf);
-        this.setState(() => ({
-          searchBooks: convertObjtToArray(mergedBooks),
-          loadingBooks: null,
-        }));
-      });
+      BooksAPI.search(searchTerm)
+        .then(searchBooks => {
+          if (searchBooks.error) {
+            throw new Error('Invalid Search Term');
+          } else {
+            const booksOnShelf = this.state.books.filter(searchBook =>
+              searchBooks.find(
+                stateBooks =>
+                  stateBooks.title === searchBook.title &&
+                  stateBooks.publishedDate === searchBook.publishedDate
+              )
+            );
+            const mergedBooks = R.merge(searchBooks, booksOnShelf);
+            this.setState(() => ({
+              searchBooks: convertObjtToArray(mergedBooks),
+              loadingBooks: null,
+            }));
+          }
+        })
+        .catch(error => {
+          this.setState(() => ({
+            searchBooks: [],
+            loadingBooks: null,
+            invalidSearchTerm: error.message,
+          }));
+        });
     }
   };
 
@@ -96,6 +109,7 @@ class BooksApp extends Component {
               books={this.state.searchBooks}
               updatingBook={this.state.updatingBook}
               loadingBooks={this.state.loadingBooks}
+              invalidSearchTerm={this.state.invalidSearchTerm}
               onUpdateBook={this.onUpdateBook}
               onSearchBook={this.onSearchBook}
             />

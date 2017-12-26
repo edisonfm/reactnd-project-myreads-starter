@@ -7,6 +7,7 @@ import { ProgressBar } from 'react-toolbox/lib/progress_bar';
 
 const SearchBooksPage = ({
   books,
+  invalidSearchTerm,
   updatingBook,
   loadingBooks,
   onUpdateBook,
@@ -31,7 +32,7 @@ const SearchBooksPage = ({
         </div>
         <div className="search-books-results">
           <ol className="books-grid">
-            {books.error ? (
+            {invalidSearchTerm ? (
               <p>
                 Books not found, try another{' '}
                 <a
@@ -64,12 +65,14 @@ const SearchBooksPage = ({
 SearchBooksPage.defaultProps = {
   updatingBook: null,
   loadingBooks: null,
+  invalidSearchTerm: null,
 };
 
 SearchBooksPage.propTypes = {
-  books: PropTypes.oneOfType([PropTypes.array, PropTypes.object]).isRequired,
-  updatingBook: PropTypes.string,
-  loadingBooks: PropTypes.string,
+  books: PropTypes.array.isRequired,
+  updatingBook: PropTypes.bool,
+  loadingBooks: PropTypes.bool,
+  invalidSearchTerm: PropTypes.string,
   onUpdateBook: PropTypes.func.isRequired,
   onSearchBook: PropTypes.func.isRequired,
 };
